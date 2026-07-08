@@ -89,6 +89,11 @@
       animatedPixel.__pixelTrailAnimation = undefined;
     }
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      pixel.style.opacity = "0";
+      return;
+    }
+
     pixel.style.opacity = "1";
 
     if (safeFadeDuration <= 0) {

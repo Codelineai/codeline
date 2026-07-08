@@ -29,3 +29,33 @@ You MUST use this tool whenever writing Svelte code before sending it to the use
 
 Generates a Svelte Playground link with the provided code.
 After completing the code, ask the user if they want a playground link. Only call this tool after user confirmation and NEVER if code was written to files in their project.
+
+## UI design skill precedence
+
+Use `emil-design-eng` as the primary authority for:
+
+- whether an interaction should animate;
+- animation frequency, duration, easing and motion personality;
+- gesture behavior;
+- performance;
+- accessibility;
+- component behavior.
+
+Use `make-interfaces-feel-better` as a complementary visual-polish checklist for:
+
+- typography;
+- optical alignment;
+- concentric radii;
+- surface treatment;
+- image outlines;
+- tabular numbers;
+- hit areas;
+- small visual details.
+
+When the skills disagree:
+
+1. Product consistency and the existing design system take priority.
+2. Accessibility and reduced-motion requirements take priority.
+3. `emil-design-eng` decides whether and why something animates.
+4. Values such as scale, duration and bounce are defaults, not immutable constants.
+5. Do not add animation merely because a polish checklist recommends one.
