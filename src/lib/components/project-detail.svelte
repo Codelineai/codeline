@@ -1,5 +1,7 @@
 <script lang="ts">
   import type { Project } from "$lib/projects";
+  import AnimatedText from "./animated-text.svelte";
+  import Separator from "./ui/separator/separator.svelte";
 
   interface Props {
     project: Project;
@@ -16,24 +18,24 @@
 </script>
 
 <div class="flex h-full flex-col overflow-y-auto px-6 py-6 md:px-8 md:py-10">
-  <div class="flex flex-col gap-5">
-    <div class="flex flex-col gap-4">
-      <h2 class="text-xl font-medium text-balance">{project.name}</h2>
-      <Info />
-    </div>
+  <div class="flex flex-col gap-4">
+    <h2 class="text-xl font-medium text-balance">{project.name}</h2>
+    <Info />
+  </div>
 
+  <div class="mt-auto flex flex-col gap-3 pt-8">
     <a
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Ver ${project.name} en una nueva pestaña`}
-      class="w-fit text-sm text-muted-foreground underline-offset-4 transition-colors duration-150 hover:text-foreground hover:underline"
+      class="w-full transition-transform duration-150 active:scale-[0.98]"
     >
-      Ver proyecto ↗
+      <AnimatedText class="block bg-foreground dark:bg-primary w-full text-lg">
+        {project.shortUrl} ↗
+      </AnimatedText>
     </a>
-  </div>
-
-  <div class="mt-auto flex flex-col gap-3">
+    <Separator />
     <div class="flex gap-4">
       <button
         disabled={!hasPrev}

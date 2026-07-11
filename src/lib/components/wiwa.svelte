@@ -249,13 +249,22 @@
     {/each}
   </div>
 
-  <!-- Stats — mobile: one-liner compacto debajo -->
-  <p
-    in:fly|global={{ y: 8, duration: 300, delay: 300, easing: cubicOut }}
-    class="relative z-10 tabular-nums text-xs text-muted-foreground md:hidden"
+  <!-- Stats — mobile: rail horizontal con scroll + snap -->
+  <div
+    class="relative z-10 flex w-full snap-x snap-mandatory gap-8 overflow-x-auto [scrollbar-width:none] md:hidden [&::-webkit-scrollbar]:hidden"
   >
-    300K+ tickets · 100K+ transacciones · 4K+ usuarios
-  </p>
+    {#each stats as stat, i (stat.value)}
+      <div
+        in:fly|global={{ y: 8, duration: 300, delay: 250 + i * 70, easing: cubicOut }}
+        class="flex shrink-0 snap-start flex-col gap-1"
+      >
+        <span class="text-5xl font-medium tabular-nums text-foreground"
+          >{stat.value}</span
+        >
+        <span class="text-xs text-muted-foreground">{stat.label}</span>
+      </div>
+    {/each}
+  </div>
 </div>
 
 <style>

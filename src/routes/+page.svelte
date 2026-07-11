@@ -15,16 +15,6 @@
 <main class="flex h-screen flex-col overflow-hidden bg-background md:flex-row">
   <div class="relative flex min-h-0 flex-1 overflow-hidden">
     <BackgroundGrid gridSize={80} />
-
-    {#if selected !== null}
-      <div
-        transition:fade={{ duration: 150, easing: cubicOut }}
-        class="absolute left-6 top-6 z-20"
-      >
-        <HomeButton onclick={() => (selected = null)} />
-      </div>
-    {/if}
-
     {#if selected === null}
       <div
         transition:fade={{ duration: 150, easing: cubicOut }}
@@ -41,9 +31,13 @@
           <Logo />
         </div>
       </div>
-    {/if}
-
-    {#if selected !== null}
+    {:else}
+      <div
+        transition:fade={{ duration: 150, easing: cubicOut }}
+        class="absolute left-6 top-6 z-20"
+      >
+        <HomeButton onclick={() => (selected = null)} />
+      </div>
       {@const ProjectComponent = projects[selected].highlightComponent}
       <div
         transition:fade={{ duration: 150, easing: cubicOut }}
