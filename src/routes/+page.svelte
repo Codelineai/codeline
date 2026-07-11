@@ -43,7 +43,7 @@
         transition:fade={{ duration: 150, easing: cubicOut }}
         class="absolute inset-0 overflow-y-auto overscroll-contain md:overflow-hidden"
       >
-        <div class="flex min-h-full items-center justify-center py-8 md:py-0">
+        <div class="flex min-h-full items-center justify-center py-4 md:py-0">
           <ProjectComponent />
         </div>
       </div>

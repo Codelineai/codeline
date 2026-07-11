@@ -136,7 +136,7 @@
 </script>
 
 <div
-  class="relative flex w-full flex-col items-center justify-center gap-8 px-8 md:h-full md:flex-row md:gap-16"
+  class="relative flex w-full flex-col items-center justify-center gap-4 px-8 md:h-full md:flex-row md:gap-16"
 >
   <!-- Capa ambiental — solo desktop, detrás del contenido, no interactiva -->
   <div
