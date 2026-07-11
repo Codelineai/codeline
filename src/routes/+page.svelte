@@ -12,7 +12,7 @@
   let selected = $state<number | null>(null);
 </script>
 
-<main class="flex h-screen flex-col overflow-hidden bg-background md:flex-row">
+<main class="flex h-dvh flex-col overflow-hidden bg-background md:flex-row">
   <div class="relative flex min-h-0 flex-1 overflow-hidden">
     <BackgroundGrid gridSize={80} />
     {#if selected === null}
@@ -41,9 +41,11 @@
       {@const ProjectComponent = projects[selected].highlightComponent}
       <div
         transition:fade={{ duration: 150, easing: cubicOut }}
-        class="absolute inset-0 flex items-center justify-center"
+        class="absolute inset-0 overflow-y-auto overscroll-contain md:overflow-hidden"
       >
-        <ProjectComponent />
+        <div class="flex min-h-full items-center justify-center py-8 md:py-0">
+          <ProjectComponent />
+        </div>
       </div>
     {/if}
   </div>

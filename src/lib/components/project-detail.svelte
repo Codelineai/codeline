@@ -17,7 +17,9 @@
   let Info = $derived(project.infoComponent);
 </script>
 
-<div class="flex h-full flex-col overflow-y-auto px-6 py-6 md:px-8 md:py-10">
+<div
+  class="flex h-full flex-col overflow-y-auto overscroll-contain px-6 py-6 md:px-8 md:py-10"
+>
   <div class="flex flex-col gap-4">
     <h2 class="text-xl font-medium text-balance">{project.name}</h2>
     <Info />

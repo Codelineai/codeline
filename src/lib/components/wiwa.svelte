@@ -136,7 +136,7 @@
 </script>
 
 <div
-  class="relative flex h-full w-full flex-col items-center justify-center gap-8 px-8 md:flex-row md:gap-16"
+  class="relative flex w-full flex-col items-center justify-center gap-8 px-8 md:h-full md:flex-row md:gap-16"
 >
   <!-- Capa ambiental — solo desktop, detrás del contenido, no interactiva -->
   <div
@@ -251,7 +251,7 @@
 
   <!-- Stats — mobile: rail horizontal con scroll + snap -->
   <div
-    class="relative z-10 flex w-full snap-x snap-mandatory gap-8 overflow-x-auto [scrollbar-width:none] md:hidden [&::-webkit-scrollbar]:hidden"
+    class="relative z-10 flex w-full snap-x snap-mandatory gap-8 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [touch-action:pan-x] md:hidden [&::-webkit-scrollbar]:hidden"
   >
     {#each stats as stat, i (stat.value)}
       <div
