@@ -14,6 +14,8 @@
 
 <main class="flex h-screen flex-col overflow-hidden bg-background md:flex-row">
   <div class="relative flex min-h-0 flex-1 overflow-hidden">
+    <BackgroundGrid gridSize={80} />
+
     {#if selected !== null}
       <div
         transition:fade={{ duration: 150, easing: cubicOut }}
@@ -28,7 +30,6 @@
         transition:fade={{ duration: 150, easing: cubicOut }}
         class="absolute inset-0 flex items-center overflow-hidden"
       >
-        <BackgroundGrid gridSize={80} />
         <div class="absolute inset-0 hidden md:block">
           <PixelTrail
             pixelColor="oklch(0.649 0.209 294.245)"
@@ -43,7 +44,7 @@
     {/if}
 
     {#if selected !== null}
-      {@const ProjectComponent = projects[selected].component}
+      {@const ProjectComponent = projects[selected].highlightComponent}
       <div
         transition:fade={{ duration: 150, easing: cubicOut }}
         class="absolute inset-0 flex items-center justify-center"
@@ -53,7 +54,10 @@
     {/if}
   </div>
 
-  <div class="bg-border h-px w-full shrink-0 md:h-full md:w-px" aria-hidden="true"></div>
+  <div
+    class="bg-border h-px w-full shrink-0 md:h-full md:w-px"
+    aria-hidden="true"
+  ></div>
 
   <div class="relative h-2/5 w-full md:h-full md:w-96">
     {#if selected === null}
@@ -63,9 +67,7 @@
       >
         <ProjectsList onselect={(i) => (selected = i)} />
       </div>
-    {/if}
-
-    {#if selected !== null}
+    {:else}
       <div
         transition:fade={{ duration: 150, easing: cubicOut }}
         class="absolute inset-0"

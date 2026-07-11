@@ -3,37 +3,38 @@ import MyWayPizza from "$lib/components/my-way-pizza.svelte";
 import SmartCards from "$lib/components/smart-cards.svelte";
 import Stickerts from "$lib/components/stickerts.svelte";
 import Wiwa from "$lib/components/wiwa.svelte";
+import WiwaInfo from "$lib/components/wiwa-info.svelte";
 
 export interface Project {
   name: string;
-  description: string;
   url: string;
-  component: Component;
+  infoComponent: Component;
+  highlightComponent: Component;
 }
 
 export const projects: Project[] = [
   {
     name: "Visita Wiwa Quito",
-    description: "Placeholder description.",
-    url: "#",
-    component: Wiwa,
+    url: "https://www.visitawiwa.com",
+    infoComponent: WiwaInfo,
+    highlightComponent: Wiwa,
   },
   {
     name: "Stickerts",
-    description: "Placeholder description.",
-    url: "#",
-    component: Stickerts,
+    url: "#stickerts",
+    infoComponent: WiwaInfo,
+    highlightComponent: Stickerts,
   },
   {
     name: "Smart Cards",
-    description: "Placeholder description.",
-    url: "#",
-    component: SmartCards,
+    url: "#smart-cards",
+    infoComponent: WiwaInfo,
+    highlightComponent: SmartCards,
   },
   {
     name: "My Way Pizza",
-    description: "Placeholder description.",
-    url: "#",
-    component: MyWayPizza,
+    url: "#my-way-pizza",
+    infoComponent: WiwaInfo,
+    highlightComponent: MyWayPizza,
   },
 ];
