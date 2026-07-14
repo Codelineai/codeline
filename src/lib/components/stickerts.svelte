@@ -14,13 +14,25 @@
   // sesgadas al centro/izquierda para no tapar la columna de stats (derecha).
   // `rot` da el desorden. Cada carta se arrastra por todo el panel (bounds="parent").
   // `mobile`: en pantallas chicas mostramos menos cromos para que no se amontonen.
-  const cromos = [
+  // `mx`/`my`: posición alternativa (%) en mobile; si no están, usa x/y.
+  type Cromo = {
+    light: string;
+    dark: string;
+    alt: string;
+    x: number;
+    y: number;
+    rot: number;
+    mobile: boolean;
+    mx?: number;
+    my?: number;
+  };
+  const cromos: Cromo[] = [
     { light: messiLight, dark: messiDark, alt: "Messi Extra", x: 4, y: 8, rot: -8, mobile: false },
     { light: messiLight, dark: messiDark, alt: "Messi Extra", x: 30, y: 4, rot: 6, mobile: false },
     { light: messiLight, dark: messiDark, alt: "Messi Extra", x: 16, y: 38, rot: -4, mobile: true },
     { light: messiLight, dark: messiDark, alt: "Messi Extra", x: 46, y: 24, rot: 9, mobile: true },
     { light: messiLight, dark: messiDark, alt: "Messi Extra", x: 6, y: 60, rot: 11, mobile: false },
-    { light: messiLight, dark: messiDark, alt: "Messi Extra", x: 34, y: 56, rot: -7, mobile: true },
+    { light: messiLight, dark: messiDark, alt: "Messi Extra", x: 34, y: 56, rot: -7, mobile: true, mx: 4, my: 15 },
     { light: messiLight, dark: messiDark, alt: "Messi Extra", x: 52, y: 50, rot: 4, mobile: false },
   ];
 
@@ -40,15 +52,15 @@
 <!-- Root que llena todo el panel del hero y sirve de área de arrastre (bounds) -->
 <div
   in:fade|global={{ duration: 400, easing: cubicOut }}
-  class="absolute inset-0 overflow-hidden"
+  class="hero absolute inset-0 overflow-hidden"
 >
   <!-- Cromos esparcidos — cada uno se arrastra por todo el panel -->
   {#each cromos as cromo, i (i)}
     <DraggableCard
       bounds="parent"
       rotate={cromo.rot}
-      class={`absolute w-[124px] rounded-2xl p-0 md:w-[184px] ${cromo.mobile ? "" : "hidden md:block"}`}
-      style={`left:${cromo.x}%;top:${cromo.y}%`}
+      class={`cromo-card absolute w-[124px] rounded-2xl p-0 md:w-[184px] ${cromo.mobile ? "" : "hidden md:block"}`}
+      style={`--cx:${cromo.x}%;--cy:${cromo.y}%;--mcx:${cromo.mx ?? cromo.x}%;--mcy:${cromo.my ?? cromo.y}%`}
     >
       <img
         src={cromo.light}
@@ -106,7 +118,7 @@
     </div>
   </div>
 
-  <!-- Overlay marca — mobile: logo arriba-izquierda -->
+  <!-- Overlay marca — mobile: logo arriba-derecha (alineado con el de codeline) -->
   <div
     in:fly|global={{ y: 8, duration: 350, delay: 120, easing: cubicOut }}
     class="pointer-events-none absolute right-6 top-6 z-[1] md:hidden"
@@ -125,7 +137,7 @@
 
   <!-- Overlay stats — mobile: rail horizontal con scroll + snap al pie -->
   <div
-    class="absolute inset-x-0 bottom-4 z-[1] flex snap-x snap-mandatory gap-8 overflow-x-auto overscroll-x-contain px-6 [scrollbar-width:none] [touch-action:pan-x] md:hidden [&::-webkit-scrollbar]:hidden"
+    class="absolute inset-x-0 bottom-4 z-[1] flex snap-x snap-mandatory gap-8 overflow-x-auto overscroll-x-contain px-6 scroll-px-6 [scrollbar-width:none] [touch-action:pan-x] md:hidden [&::-webkit-scrollbar]:hidden"
   >
     {#each stats as stat, i (stat.label)}
       <div
@@ -155,3 +167,20 @@
     arrastrá los cromos
   </span>
 </div>
+
+<style>
+  /* Posición base de cada cromo (desktop). El drag de neodrag usa `translate:`,
+     así que `left/top` acá no se pisan con el arrastre. */
+  .hero :global(.cromo-card) {
+    left: var(--cx);
+    top: var(--cy);
+  }
+
+  /* En mobile, usar la posición alternativa (mx/my) si se definió. */
+  @media (max-width: 767px) {
+    .hero :global(.cromo-card) {
+      left: var(--mcx);
+      top: var(--mcy);
+    }
+  }
+</style>
