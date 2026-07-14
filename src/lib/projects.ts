@@ -2,6 +2,7 @@ import type { Component } from "svelte";
 import MyWayPizza from "$lib/components/my-way-pizza.svelte";
 import SmartCards from "$lib/components/smart-cards.svelte";
 import Stickerts from "$lib/components/stickerts.svelte";
+import StickertsInfo from "$lib/components/stickerts-info.svelte";
 import Wiwa from "$lib/components/wiwa.svelte";
 import WiwaInfo from "$lib/components/wiwa-info.svelte";
 
@@ -25,7 +26,7 @@ export const projects: Project[] = [
     name: "Stickerts",
     url: "https://www.stickerts.com",
     shortUrl: "stickerts.com",
-    infoComponent: WiwaInfo,
+    infoComponent: StickertsInfo,
     highlightComponent: Stickerts,
   },
   {

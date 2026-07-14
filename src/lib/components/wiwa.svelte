@@ -24,7 +24,7 @@
   const stats = [
     { value: "300K+", label: "tickets vendidos" },
     { value: "100K+", label: "transacciones" },
-    { value: "4K+", label: "usuarios registrados" },
+    { value: "4K+", label: "usuarios" },
   ];
 
   // Natural dimensions (for aspect-ratio when masking).
