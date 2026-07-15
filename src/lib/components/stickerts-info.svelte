@@ -4,10 +4,9 @@
   import { prefersReducedMotion } from "svelte/motion";
 
   const capabilities = [
-    "Publicá tus repes en segundos y ponelas a la vista de todos.",
-    "Encontrá los cromos que te faltan y completá el álbum más rápido.",
-    "Intercambio directo entre usuarios, sin intermediarios.",
-    "Compra y venta abierta: un mercado real para tus figuritas.",
+    "Publica cromos con foto, precio y ubicación",
+    "Filtra por país, ciudad, álbum, número y tipo de publicación.",
+    "Contacto directo por WhatsApp o correo con el vendedor",
   ];
 
   // El panel completo ya hace fade en +page.svelte; aquí solo un desliz sutil
@@ -20,9 +19,9 @@
 
 <div class="flex flex-col gap-4">
   <p class="text-sm leading-relaxed text-muted-foreground text-pretty">
-    El marketplace para comprar, vender e intercambiar los cromos del álbum del
-    Mundial. <span class="text-foreground">Stickerts</span> conecta a coleccionistas
-    para que las repetidas de unos completen el álbum de otros.
+    Una aplicación web para comprar, vender e intercambiar cromos entre
+    coleccionistas. Con <span class="text-foreground">Stickerts</span> puedes encontrar
+    los stickers que te faltan y vender tus repetidos.
   </p>
 
   <ul class="flex flex-col gap-2.5">
@@ -46,9 +45,9 @@
       Por qué lo creé
     </span>
     <p class="text-sm leading-relaxed text-muted-foreground text-pretty">
-      Quería una forma pública y masiva de compartir los cromos repetidos y, de
-      paso, abrir un mercado fácil para venderlos. Un proyecto que aprecio,
-      construido en tan solo 5 días.
+      Lo creé para porque buscar cromos en chats y grupos era desordenado.
+      Quería una forma centralizada de encontrar coleccionistas cercanos,
+      intercambiar, comprar y listar cromos valiosos.
     </p>
   </div>
 </div>

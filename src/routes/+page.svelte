@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
+  import { page } from "$app/state";
   import { fade } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import BackgroundGrid from "$lib/components/background-grid.svelte";
@@ -9,7 +11,36 @@
   import ProjectsList from "$lib/components/projects-list.svelte";
   import { projects } from "$lib/projects";
 
-  let selected = $state<number | null>(null);
+  let selected = $derived.by(() => {
+    const slug = page.url.hash.slice(1);
+    const index = projects.findIndex((project) => project.slug === slug);
+
+    return index === -1 ? null : index;
+  });
+
+  function navigateToHash(hash: string) {
+    const url = new URL(page.url);
+    url.hash = hash;
+
+    void goto(url, { noScroll: true, keepFocus: true });
+  }
+
+  function selectProject(index: number) {
+    navigateToHash(projects[index].slug);
+  }
+
+  function clearSelection() {
+    navigateToHash("");
+  }
+
+  function selectPrevious() {
+    if (selected !== null && selected > 0) selectProject(selected - 1);
+  }
+
+  function selectNext() {
+    if (selected !== null && selected < projects.length - 1)
+      selectProject(selected + 1);
+  }
 </script>
 
 <main class="flex h-dvh flex-col overflow-hidden bg-background md:flex-row">
@@ -36,7 +67,7 @@
         transition:fade={{ duration: 150, easing: cubicOut }}
         class="absolute left-6 top-6 z-20"
       >
-        <HomeButton onclick={() => (selected = null)} />
+        <HomeButton onclick={clearSelection} />
       </div>
       {@const ProjectComponent = projects[selected].highlightComponent}
       <div
@@ -61,7 +92,7 @@
         transition:fade={{ duration: 150, easing: cubicOut }}
         class="absolute inset-0"
       >
-        <ProjectsList onselect={(i) => (selected = i)} />
+        <ProjectsList onselect={selectProject} />
       </div>
     {:else}
       <div
@@ -72,13 +103,9 @@
           project={projects[selected]}
           hasPrev={selected > 0}
           hasNext={selected < projects.length - 1}
-          onprev={() => {
-            if (selected !== null) selected--;
-          }}
-          onnext={() => {
-            if (selected !== null) selected++;
-          }}
-          onback={() => (selected = null)}
+          onprev={selectPrevious}
+          onnext={selectNext}
+          onback={clearSelection}
         />
       </div>
     {/if}

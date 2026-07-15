@@ -5,7 +5,7 @@
 <script lang="ts">
   import { draggable, type DragOptions } from "@neodrag/svelte";
   import { fromAction, type Attachment } from "svelte/attachments";
-  import { prefersReducedMotion } from "svelte/motion";
+  import { prefersReducedMotion, Spring } from "svelte/motion";
   import type { Snippet } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
   import { cn } from "$lib/utils";
@@ -41,6 +41,22 @@
   let scale = $state(1);
   let zIndex = $state(1);
 
+  // Inclinación por inercia: la carta se ladea hacia la dirección del arrastre
+  // (peso/lag) y al soltar vuelve a 0 con un rebote sutil (damping bajo).
+  const fling = new Spring(
+    { x: 0, y: 0 },
+    { stiffness: 0.16, damping: 0.6 },
+  );
+  // Velocidad del puntero (px/ms) → grados de inclinación, con tope para que
+  // los flings rápidos no exageren.
+  const FLING_FACTOR = 26;
+  const FLING_MAX = 14;
+  let lastOffsetX = 0;
+  let lastOffsetY = 0;
+  let lastT = 0;
+
+  const clampDeg = (v: number) => Math.max(-FLING_MAX, Math.min(FLING_MAX, v));
+
   function resetTilt() {
     rotateX = 0;
     rotateY = 0;
@@ -57,6 +73,10 @@
           resetTilt();
           return;
         }
+
+        // Durante el arrastre manda la inclinación por inercia (fling); el tilt
+        // de hover se suprime porque el cursor queda casi fijo respecto a la carta.
+        if (isDragging) return;
 
         const rect = node.getBoundingClientRect();
         const x = event.clientX - rect.left;
@@ -101,17 +121,40 @@
     // así el `transform` queda libre para el tilt 3D (perspective/rotate/scale) sin pisarse.
     legacyTranslate: false,
     threshold: { distance: 2 },
-    onDragStart: () => {
+    onDragStart: ({ offsetX, offsetY, event }) => {
       isDragging = true;
       scale = prefersReducedMotion.current ? 1 : 1.015;
+      lastOffsetX = offsetX;
+      lastOffsetY = offsetY;
+      lastT = event.timeStamp;
 
       if (selectedOnTop) {
         topZIndex += 1;
         zIndex = topZIndex;
       }
     },
+    onDrag: ({ offsetX, offsetY, event }) => {
+      if (prefersReducedMotion.current) return;
+
+      const dt = event.timeStamp - lastT;
+      if (dt <= 0) return;
+
+      const vx = (offsetX - lastOffsetX) / dt;
+      const vy = (offsetY - lastOffsetY) / dt;
+      lastOffsetX = offsetX;
+      lastOffsetY = offsetY;
+      lastT = event.timeStamp;
+
+      // fling.x → rotateX (mover vertical), fling.y → rotateY (mover horizontal):
+      // la carta se ladea hacia la dirección del movimiento.
+      fling.target = {
+        x: clampDeg(-vy * FLING_FACTOR),
+        y: clampDeg(vx * FLING_FACTOR),
+      };
+    },
     onDragEnd: () => {
       isDragging = false;
+      fling.target = { x: 0, y: 0 };
       resetTilt();
     },
   } satisfies DragOptions);
@@ -129,6 +172,9 @@
   )}
   style:--rotate-x={`${rotateX}deg`}
   style:--rotate-y={`${rotateY}deg`}
+  style:--fling-x={`${fling.current.x}deg`}
+  style:--fling-y={`${fling.current.y}deg`}
+  style:--fling-z={`${fling.current.y * 0.3}deg`}
   style:--base-rotate={`${rotate}deg`}
   style:--glare-x={`${glareX}%`}
   style:--glare-y={`${glareY}%`}
@@ -146,10 +192,12 @@
   .draggable-card {
     z-index: var(--z-index);
     transform: perspective(3000px) rotate(var(--base-rotate, 0deg))
-      rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) scale(var(--card-scale));
+      rotateX(calc(var(--rotate-x) + var(--fling-x, 0deg)))
+      rotateY(calc(var(--rotate-y) + var(--fling-y, 0deg)))
+      rotateZ(var(--fling-z, 0deg)) scale(var(--card-scale));
     transform-style: preserve-3d;
     transition:
-      transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+      transform 100ms cubic-bezier(0.23, 1, 0.32, 1),
       box-shadow 160ms cubic-bezier(0.23, 1, 0.32, 1),
       opacity 160ms ease;
   }

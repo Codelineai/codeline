@@ -7,6 +7,7 @@ import Wiwa from "$lib/components/wiwa.svelte";
 import WiwaInfo from "$lib/components/wiwa-info.svelte";
 
 export interface Project {
+  slug: string;
   name: string;
   url: string;
   shortUrl: string;
@@ -16,6 +17,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "visita-wiwa-quito",
     name: "Visita Wiwa Quito",
     url: "https://www.visitawiwa.com",
     shortUrl: "visitawiwa.com",
@@ -23,6 +25,7 @@ export const projects: Project[] = [
     highlightComponent: Wiwa,
   },
   {
+    slug: "stickerts",
     name: "Stickerts",
     url: "https://www.stickerts.com",
     shortUrl: "stickerts.com",
@@ -30,6 +33,7 @@ export const projects: Project[] = [
     highlightComponent: Stickerts,
   },
   {
+    slug: "smart-cards",
     name: "Smart Cards",
     url: "https://cards.codeline.ai",
     shortUrl: "cards.codeline.ai",
@@ -37,6 +41,7 @@ export const projects: Project[] = [
     highlightComponent: SmartCards,
   },
   {
+    slug: "my-way-pizza",
     name: "My Way Pizza",
     url: "https://www.mywaypizza305.com",
     shortUrl: "mywaypizza305.com",
