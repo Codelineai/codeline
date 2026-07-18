@@ -1,25 +1,26 @@
 <script lang="ts">
+  import type { Attachment } from "svelte/attachments";
   import { cubicOut } from "svelte/easing";
   import { fade, fly } from "svelte/transition";
   import logomark from "$lib/assets/logomark.svg";
 
   const waves = [
     { id: "wave-a", delay: "0ms" },
-    { id: "wave-b", delay: "150ms" },
-    { id: "wave-c", delay: "300ms" },
+    { id: "wave-b", delay: "250ms" },
+    { id: "wave-c", delay: "500ms" },
   ] as const;
 
   const contactActions = ["message", "mail", "phone", "link"] as const;
 
   const stats = [
     { value: "+100", label: "tarjetas entregadas" },
+    { value: "+5.000", label: "taps compartidos" },
     { value: "+2.000", label: "contactos guardados" },
-    { value: "+5.000", label: "toques compartidos" },
   ];
 
   // Offset de secuencia inicial por card (01 → 02 → 03). En hover se
   // reproduce el demo de la card al instante (offset 0).
-  const seqDelays = ["0ms", "90ms", "180ms"];
+  const seqDelays = ["0ms", "80ms", "160ms"];
 
   // Un contador por card: al cambiar, `{#key}` remonta la ilustración y
   // re-dispara las animaciones CSS one-shot.
@@ -33,6 +34,31 @@
   }
 
   const seqFor = (i: number) => (hovered[i] ? "0ms" : seqDelays[i]);
+
+  // Las animaciones quedan en pausa (mostrando su estado inicial) hasta que
+  // la card entra en el viewport; ahí se "arman" y corre el one-shot. Esto
+  // importa en mobile, donde las cards están apiladas y bajo el fold.
+  let inView = $state([false, false, false]);
+
+  function revealOnce(onEnter: () => void): Attachment<HTMLElement> {
+    return (node) => {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              onEnter();
+              io.disconnect();
+              break;
+            }
+          }
+        },
+        { threshold: 0.35, rootMargin: "0px 0px -12% 0px" },
+      );
+      io.observe(node);
+
+      return () => io.disconnect();
+    };
+  }
 </script>
 
 <section
@@ -55,8 +81,10 @@
     >
       <div
         class="relative flex h-60 items-center justify-center overflow-hidden bg-[radial-gradient(80%_80%_at_50%_40%,rgba(229,241,127,0.08),transparent_70%)] p-6 sm:h-64 xl:h-72"
+        class:sc-armed={inView[0]}
         style:--seq={seqFor(0)}
-        onmouseenter={() => replayCard(0)}
+        {@attach revealOnce(() => (inView[0] = true))}
+        onpointerenter={() => replayCard(0)}
         aria-hidden="true"
         role="presentation"
       >
@@ -69,9 +97,6 @@
             <div class="absolute inset-0 flex items-center justify-center">
               <img src={logomark} alt="" class="h-12 w-auto select-none" />
             </div>
-            <div
-              class="absolute right-3.5 top-3 h-4 w-[1.375rem] rounded border border-white/20"
-            ></div>
             {#key replay[0]}
               <div
                 class="sc-shine absolute -top-[40%] left-0 h-[180%] w-11 bg-[linear-gradient(90deg,transparent,rgba(229,241,127,0.16),transparent)]"
@@ -92,13 +117,15 @@
     </li>
 
     <li
-      in:fade={{ delay: 45, duration: 160, easing: cubicOut }}
+      in:fade={{ delay: 45, duration: 500, easing: cubicOut }}
       class="overflow-hidden rounded-[1.375rem] border border-border bg-card shadow-[0_18px_50px_-30px_rgba(0,0,0,0.25)] dark:shadow-[0_24px_60px_-36px_rgba(0,0,0,0.9)]"
     >
       <div
         class="relative flex h-60 items-center justify-center overflow-hidden bg-[radial-gradient(80%_80%_at_62%_50%,rgba(148,120,255,0.09),transparent_70%)] p-6 sm:h-64 xl:h-72"
+        class:sc-armed={inView[1]}
         style:--seq={seqFor(1)}
-        onmouseenter={() => replayCard(1)}
+        {@attach revealOnce(() => (inView[1] = true))}
+        onpointerenter={() => replayCard(1)}
         aria-hidden="true"
         role="presentation"
       >
@@ -132,7 +159,9 @@
             <div
               class="flex size-[2.125rem] items-center justify-center rounded-lg border-2 border-primary"
             >
-              <div class="size-3 rounded-[0.2rem] border-2 border-primary"></div>
+              <div
+                class="size-3 rounded-[0.2rem] border-2 border-primary"
+              ></div>
             </div>
           </div>
         </div>
@@ -143,7 +172,7 @@
         <h3
           class="text-balance text-lg font-semibold leading-snug text-foreground"
         >
-          Comparte con un toque
+          Comparte con un tap
         </h3>
       </div>
     </li>
@@ -154,8 +183,10 @@
     >
       <div
         class="relative flex h-72 items-center justify-center overflow-hidden bg-[radial-gradient(80%_80%_at_50%_40%,rgba(229,241,127,0.08),transparent_70%)] p-6"
+        class:sc-armed={inView[2]}
         style:--seq={seqFor(2)}
-        onmouseenter={() => replayCard(2)}
+        {@attach revealOnce(() => (inView[2] = true))}
+        onpointerenter={() => replayCard(2)}
         aria-hidden="true"
         role="presentation"
       >
@@ -171,24 +202,19 @@
               ></div>
               <div
                 class="sc-rise mt-4 h-[0.5rem] w-16 rounded-full bg-white/20"
-                style:--rise-delay="70ms"
+                style:--rise-delay="120ms"
               ></div>
               <div
                 class="sc-rise mt-2 h-[0.4rem] w-12 rounded-full bg-white/10"
-                style:--rise-delay="140ms"
+                style:--rise-delay="240ms"
               ></div>
               <div
                 class="sc-rise mt-4 flex h-7 w-full items-center justify-center rounded-lg bg-accent"
-                style:--rise-delay="210ms"
+                style:--rise-delay="360ms"
               >
-                <div
-                  class="h-[0.4rem] w-11 rounded-full bg-[#0b0b0e]/55"
-                ></div>
+                <div class="h-[0.4rem] w-11 rounded-full bg-[#0b0b0e]/55"></div>
               </div>
-              <div
-                class="sc-rise mt-4 flex gap-1.5"
-                style:--rise-delay="280ms"
-              >
+              <div class="sc-rise mt-4 flex gap-1.5" style:--rise-delay="480ms">
                 {#each contactActions as action (action)}
                   <span
                     class="size-4 rounded-md border border-white/15"
@@ -223,10 +249,14 @@
         }}
         class="flex flex-col items-center gap-1 text-center"
       >
-        <dt class="text-2xl font-medium tabular-nums text-foreground sm:text-4xl">
+        <dt
+          class="text-2xl font-medium tabular-nums text-foreground sm:text-4xl"
+        >
           {stat.value}
         </dt>
-        <dd class="text-[0.7rem] leading-tight text-muted-foreground sm:text-xs">
+        <dd
+          class="text-[0.7rem] leading-tight text-muted-foreground sm:text-xs"
+        >
           {stat.label}
         </dd>
       </div>
@@ -243,6 +273,26 @@
 
   .sc-perspective {
     perspective: 1000px;
+  }
+
+  /* Las animaciones esperan en pausa (estado inicial) hasta que la card entra
+     en el viewport y recibe `.sc-armed` (vía IntersectionObserver). */
+  .sc-card3d,
+  .sc-shine,
+  .sc-tap,
+  .sc-wave,
+  .sc-phone-in,
+  .sc-rise {
+    animation-play-state: paused;
+  }
+
+  .sc-armed .sc-card3d,
+  .sc-armed .sc-shine,
+  .sc-armed .sc-tap,
+  .sc-armed .sc-wave,
+  .sc-armed .sc-phone-in,
+  .sc-armed .sc-rise {
+    animation-play-state: running;
   }
 
   /* Cuerpo de dispositivo: fijo oscuro (se lee como aparato) en ambos temas. */
@@ -272,21 +322,21 @@
   /* ---- Card 2: rebote de "toque" + un ripple; todo vuelve a su base ---- */
   .sc-tap {
     transform: translateY(0) rotate(-6deg);
-    animation: sc-tap 450ms var(--ease-in-out) both;
+    animation: sc-tap 1100ms var(--ease-out) both;
     animation-delay: calc(var(--seq, 0ms) + 120ms);
   }
 
   .sc-wave {
     opacity: 0;
     transform: scale(0.35);
-    animation: sc-wave 700ms var(--ease-out) both;
+    animation: sc-wave 1200ms var(--ease-out) both;
     animation-delay: calc(var(--seq, 0ms) + 140ms + var(--wave-delay, 0ms));
   }
 
   /* El teléfono solo aparece (opacity + scale); su Y queda fija en -50%. */
   .sc-phone-in {
     transform: translateY(-50%);
-    animation: sc-phone-in 350ms var(--ease-out) both;
+    animation: sc-phone-in 450ms var(--ease-out) both;
     animation-delay: var(--seq, 0ms);
   }
 
@@ -294,7 +344,7 @@
   .sc-rise {
     opacity: 0;
     transform: translateY(12px);
-    animation: sc-rise 300ms var(--ease-out) both;
+    animation: sc-rise 500ms var(--ease-out) both;
     animation-delay: calc(var(--seq, 0ms) + var(--rise-delay, 0ms));
   }
 
@@ -342,7 +392,7 @@
     }
 
     50% {
-      transform: translateY(-14px) rotate(-6deg);
+      transform: translateY(-25px) rotate(-6deg);
     }
 
     100% {
