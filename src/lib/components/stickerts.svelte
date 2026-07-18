@@ -57,6 +57,8 @@
       y: 38,
       rot: -4,
       mobile: true,
+      mx: 75,
+      my: 25,
     },
     {
       light: kylianMbappe3Light,
@@ -65,7 +67,7 @@
       x: 46,
       y: 24,
       rot: 9,
-      mobile: true,
+      mobile: false,
     },
     {
       light: squad1Light,
@@ -83,9 +85,18 @@
       x: 34,
       y: 56,
       rot: -7,
+      mobile: false,
+    },
+    {
+      light: cristianoRonaldo35Light,
+      dark: cristianoRonaldo35Dark,
+      alt: "Cristiano Ronaldo 35 sticker",
+      x: 4,
+      y: 8,
+      rot: -8,
       mobile: true,
-      mx: 4,
-      my: 15,
+      mx: 0,
+      my: 10,
     },
     {
       light: messi200Light,
@@ -96,17 +107,8 @@
       rot: 2,
       mobile: true,
       primary: true,
-      mx: 24,
+      mx: 30,
       my: 21,
-    },
-    {
-      light: cristianoRonaldo35Light,
-      dark: cristianoRonaldo35Dark,
-      alt: "Cristiano Ronaldo 35 sticker",
-      x: 4,
-      y: 8,
-      rot: -8,
-      mobile: false,
     },
   ];
 
@@ -117,7 +119,7 @@
     // { value: "5 días", label: "de construcción" },
     { value: "100+", label: "usuarios" },
     // { value: "★★★★★", label: "aclamado por mi novia" },
-    { value: "$200", label: "la venta más cara" },
+    { value: "$200", label: "el cromo más caro" },
   ];
 
   const siteUrl = "https://www.stickerts.com";
