@@ -1,6 +1,7 @@
 import type { Component } from "svelte";
 import MyWayPizza from "$lib/components/my-way-pizza.svelte";
 import SmartCards from "$lib/components/smart-cards.svelte";
+import SmartCardsInfo from "$lib/components/smart-cards-info.svelte";
 import Stickerts from "$lib/components/stickerts.svelte";
 import StickertsInfo from "$lib/components/stickerts-info.svelte";
 import Wiwa from "$lib/components/wiwa.svelte";
@@ -37,7 +38,7 @@ export const projects: Project[] = [
     name: "Smart Cards",
     url: "https://cards.codeline.ai",
     shortUrl: "cards.codeline.ai",
-    infoComponent: WiwaInfo,
+    infoComponent: SmartCardsInfo,
     highlightComponent: SmartCards,
   },
   {
