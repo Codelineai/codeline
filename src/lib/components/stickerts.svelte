@@ -58,7 +58,7 @@
       rot: -4,
       mobile: true,
       mx: 75,
-      my: 25,
+      my: 45,
     },
     {
       light: kylianMbappe3Light,
@@ -76,7 +76,9 @@
       x: 6,
       y: 60,
       rot: 11,
-      mobile: false,
+      mobile: true,
+      mx: 70,
+      my: 20,
     },
     {
       light: uruguay1950OneFiveLight,
@@ -84,8 +86,10 @@
       alt: "Uruguay 1950 1.5 sticker",
       x: 34,
       y: 56,
-      rot: -7,
-      mobile: false,
+      rot: 8,
+      mobile: true,
+      my: 35,
+      mx: 12,
     },
     {
       light: cristianoRonaldo35Light,
@@ -107,7 +111,7 @@
       rot: 2,
       mobile: true,
       primary: true,
-      mx: 30,
+      mx: 38,
       my: 21,
     },
   ];
