@@ -14,13 +14,16 @@
 
   const stats = [
     { value: "100+", label: "tarjetas entregadas" },
-    { value: "5.000+", label: "taps compartidos" },
-    { value: "2.000+", label: "contactos guardados" },
+    { value: "8K+", label: "taps compartidos" },
+    { value: "2K+", label: "contactos guardados" },
   ];
 
-  // Offset de secuencia inicial por card (01 → 02 → 03). En hover se
-  // reproduce el demo de la card al instante (offset 0).
-  const seqDelays = ["0ms", "80ms", "160ms"];
+  // Stagger entre cards para que la entrada se lea secuencial (01 → 02 → 03):
+  // cada card arranca `cardStagger` ms después de la anterior. En desktop las
+  // tres entran al viewport a la vez, así que este offset es lo que crea la
+  // secuencia. En hover se reproduce el demo de la card al instante (offset 0).
+  const cardStagger = 180;
+  const seqDelays = ["0ms", `${cardStagger}ms`, `${cardStagger * 2}ms`];
 
   // Un contador por card: al cambiar, `{#key}` remonta la ilustración y
   // re-dispara las animaciones CSS one-shot.
@@ -76,7 +79,7 @@
     class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3"
   >
     <li
-      in:fade={{ duration: 160, easing: cubicOut }}
+      in:fade={{ duration: 300, easing: cubicOut }}
       class="overflow-hidden rounded-[1.375rem] border border-border bg-card shadow-[0_18px_50px_-30px_rgba(0,0,0,0.25)] dark:shadow-[0_24px_60px_-36px_rgba(0,0,0,0.9)]"
     >
       <div
@@ -116,7 +119,7 @@
     </li>
 
     <li
-      in:fade={{ delay: 45, duration: 500, easing: cubicOut }}
+      in:fade={{ delay: cardStagger, duration: 300, easing: cubicOut }}
       class="overflow-hidden rounded-[1.375rem] border border-border bg-card shadow-[0_18px_50px_-30px_rgba(0,0,0,0.25)] dark:shadow-[0_24px_60px_-36px_rgba(0,0,0,0.9)]"
     >
       <div
@@ -176,7 +179,7 @@
     </li>
 
     <li
-      in:fade={{ delay: 90, duration: 160, easing: cubicOut }}
+      in:fade={{ delay: cardStagger * 2, duration: 300, easing: cubicOut }}
       class="overflow-hidden rounded-[1.375rem] border border-border bg-card shadow-[0_18px_50px_-30px_rgba(0,0,0,0.25)] dark:shadow-[0_24px_60px_-36px_rgba(0,0,0,0.9)] sm:col-span-2 xl:col-span-1"
     >
       <div
@@ -248,7 +251,9 @@
         }}
         class="flex shrink-0 snap-start flex-col gap-1"
       >
-        <dt class="text-5xl font-medium tabular-nums text-foreground">
+        <dt
+          class="text-5xl font-medium text-center tabular-nums text-foreground"
+        >
           {stat.value}
         </dt>
         <dd class="whitespace-nowrap text-center text-xs text-muted-foreground">

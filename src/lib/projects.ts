@@ -43,7 +43,7 @@ export const projects: Project[] = [
   },
   {
     slug: "my-way-pizza",
-    name: "My Way Pizza",
+    name: "Landing Design",
     url: "https://www.mywaypizza305.com",
     shortUrl: "mywaypizza305.com",
     infoComponent: WiwaInfo,
