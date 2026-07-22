@@ -13,9 +13,9 @@
   const contactActions = ["message", "mail", "phone", "link"] as const;
 
   const stats = [
-    { value: "+100", label: "tarjetas entregadas" },
-    { value: "+5.000", label: "taps compartidos" },
-    { value: "+2.000", label: "contactos guardados" },
+    { value: "100+", label: "tarjetas entregadas" },
+    { value: "5.000+", label: "taps compartidos" },
+    { value: "2.000+", label: "contactos guardados" },
   ];
 
   // Offset de secuencia inicial por card (01 → 02 → 03). En hover se
@@ -106,10 +106,9 @@
         </div>
       </div>
 
-      <div class="border-t border-border px-6 pb-6 pt-5">
-        <p class="mb-1.5 text-xs tracking-[0.18em] text-muted-foreground">01</p>
+      <div class="border-t border-border px-6 pb-5 pt-4">
         <h3
-          class="text-balance text-lg font-semibold leading-snug text-foreground"
+          class="text-balance text-center text-lg font-semibold leading-snug text-foreground"
         >
           Tu tarjeta, tu marca
         </h3>
@@ -167,10 +166,9 @@
         </div>
       </div>
 
-      <div class="border-t border-border px-6 pb-6 pt-5">
-        <p class="mb-1.5 text-xs tracking-[0.18em] text-muted-foreground">02</p>
+      <div class="border-t border-border px-6 pb-5 pt-4">
         <h3
-          class="text-balance text-lg font-semibold leading-snug text-foreground"
+          class="text-balance text-center text-lg font-semibold leading-snug text-foreground"
         >
           Comparte con un tap
         </h3>
@@ -227,10 +225,9 @@
         {/key}
       </div>
 
-      <div class="border-t border-border px-6 pb-6 pt-5">
-        <p class="mb-1.5 text-xs tracking-[0.18em] text-muted-foreground">03</p>
+      <div class="border-t border-border px-6 pb-5 pt-4">
         <h3
-          class="text-balance text-lg font-semibold leading-snug text-foreground"
+          class="text-balance text-center text-lg font-semibold leading-snug text-foreground"
         >
           Guarda tu contacto
         </h3>
@@ -238,7 +235,9 @@
     </li>
   </ol>
 
-  <dl class="mt-8 grid grid-cols-3 gap-4 sm:mt-10 sm:gap-10">
+  <dl
+    class="mt-8 flex snap-x snap-mandatory gap-8 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [touch-action:pan-x] sm:mt-10 sm:justify-center sm:gap-16 [&::-webkit-scrollbar]:hidden"
+  >
     {#each stats as stat, i (stat.value)}
       <div
         in:fly|global={{
@@ -247,16 +246,12 @@
           delay: 200 + i * 80,
           easing: cubicOut,
         }}
-        class="flex flex-col items-center gap-1 text-center"
+        class="flex shrink-0 snap-start flex-col gap-1"
       >
-        <dt
-          class="text-2xl font-medium tabular-nums text-foreground sm:text-4xl"
-        >
+        <dt class="text-5xl font-medium tabular-nums text-foreground">
           {stat.value}
         </dt>
-        <dd
-          class="text-[0.7rem] leading-tight text-muted-foreground sm:text-xs"
-        >
+        <dd class="whitespace-nowrap text-center text-xs text-muted-foreground">
           {stat.label}
         </dd>
       </div>

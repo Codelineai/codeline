@@ -135,12 +135,12 @@
   class="hero absolute inset-0 overflow-hidden"
 >
   <!-- Cromos esparcidos — cada uno se arrastra por todo el panel -->
-  {#each cromos as cromo (cromo.light)}
+  {#each cromos as cromo, i (cromo.light)}
     <DraggableCard
       bounds="parent"
       rotate={cromo.rot}
-      class={`cromo-card absolute rounded-2xl p-0 ${cromo.primary ? "z-[2] w-[144px] md:w-[212px]" : "w-[124px] md:w-[184px]"} ${cromo.mobile ? "" : "hidden md:block"}`}
-      style={`--cx:${cromo.x}%;--cy:${cromo.y}%;--mcx:${cromo.mx ?? cromo.x}%;--mcy:${cromo.my ?? cromo.y}%`}
+      class={`cromo-card cromo-enter absolute rounded-2xl p-0 ${cromo.primary ? "z-[2] w-[144px] md:w-[212px]" : "w-[124px] md:w-[184px]"} ${cromo.mobile ? "" : "hidden md:block"}`}
+      style={`--cx:${cromo.x}%;--cy:${cromo.y}%;--mcx:${cromo.mx ?? cromo.x}%;--mcy:${cromo.my ?? cromo.y}%;--enter-delay:${80 + i * 55}ms`}
     >
       <img
         src={cromo.light}
@@ -257,6 +257,48 @@
     .hero :global(.cromo-card) {
       left: var(--mcx);
       top: var(--mcy);
+    }
+  }
+
+  /* Entrada al montar la sección: cada cromo aparece con un pop escalonado
+     (--enter-delay). El keyframe termina EXACTAMENTE en el transform de reposo
+     de la carta (perspective + rotate base + scale 1), así no hay salto hacia
+     el tilt. `backwards` la mantiene oculta durante su delay; sin forwards para
+     devolver el control del transform a neodrag/tilt al terminar. */
+  .hero :global(.cromo-enter) {
+    animation: cromo-in 480ms cubic-bezier(0.23, 1, 0.32, 1)
+      var(--enter-delay, 0ms) backwards;
+  }
+
+  @keyframes cromo-in {
+    from {
+      opacity: 0;
+      transform: perspective(3000px) rotate(var(--base-rotate, 0deg))
+        translateY(14px) scale(0.86);
+    }
+
+    to {
+      opacity: 1;
+      transform: perspective(3000px) rotate(var(--base-rotate, 0deg))
+        translateY(0) scale(1);
+    }
+  }
+
+  /* Reduced-motion: conservamos el fade de opacidad (ayuda a entender que los
+     cromos aparecen) pero quitamos el desplazamiento y el scale. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero :global(.cromo-enter) {
+      animation: cromo-fade 300ms ease var(--enter-delay, 0ms) backwards;
+    }
+
+    @keyframes cromo-fade {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
   }
 </style>

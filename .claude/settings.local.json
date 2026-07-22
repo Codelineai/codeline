@@ -1,7 +1,14 @@
 {
-  "enabledMcpjsonServers": ["svelte"],
   "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "svelte"
+  ],
   "worktree": {
     "bgIsolation": "none"
+  },
+  "permissions": {
+    "allow": [
+      "mcp__svelte__svelte-autofixer"
+    ]
   }
 }
