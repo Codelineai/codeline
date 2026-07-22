@@ -8,7 +8,7 @@
   import Logo from "$lib/components/logo.svelte";
   import PixelTrail from "$lib/components/pixel-trail.svelte";
   import ProjectDetail from "$lib/components/project-detail.svelte";
-  import ProjectsList from "$lib/components/projects-list.svelte";
+  import Sidebar from "$lib/components/sidebar.svelte";
   import { projects } from "$lib/projects";
 
   let selected = $derived.by(() => {
@@ -92,7 +92,7 @@
         transition:fade={{ duration: 150, easing: cubicOut }}
         class="absolute inset-0"
       >
-        <ProjectsList onselect={selectProject} />
+        <Sidebar onselect={selectProject} />
       </div>
     {:else}
       <div
