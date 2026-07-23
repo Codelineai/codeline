@@ -41,12 +41,12 @@ export const projects: Project[] = [
     infoComponent: SmartCardsInfo,
     highlightComponent: SmartCards,
   },
-  {
-    slug: "design",
-    name: "Design Showcase",
-    url: "https://www.mywaypizza305.com",
-    shortUrl: "mywaypizza305.com",
-    infoComponent: WiwaInfo,
-    highlightComponent: MyWayPizza,
-  },
+  // {
+  //   slug: "design",
+  //   name: "Design Showcase",
+  //   url: "https://www.mywaypizza305.com",
+  //   shortUrl: "mywaypizza305.com",
+  //   infoComponent: WiwaInfo,
+  //   highlightComponent: MyWayPizza,
+  // },
 ];

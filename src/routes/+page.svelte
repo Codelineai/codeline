@@ -9,6 +9,7 @@
   import PixelTrail from "$lib/components/pixel-trail.svelte";
   import ProjectDetail from "$lib/components/project-detail.svelte";
   import Sidebar from "$lib/components/sidebar.svelte";
+  import Subtitle from "$lib/components/subtitle.svelte";
   import { projects } from "$lib/projects";
 
   let selected = $derived.by(() => {
@@ -44,11 +45,8 @@
 </script>
 
 <svelte:head>
-  <title>Codeline | Digital products and experiments</title>
-  <meta
-    name="description"
-    content="A curated collection of digital products, experiments, and platforms by Codeline."
-  />
+  <title>Codeline | AI & UX</title>
+  <meta name="description" content="Projects by Codeline | Nicolás Baquero" />
 </svelte:head>
 
 <main class="flex h-dvh flex-col overflow-hidden bg-background md:flex-row">
@@ -59,7 +57,10 @@
         transition:fade={{ duration: 150, easing: cubicOut }}
         class="absolute inset-0 flex items-center overflow-hidden"
       >
-        <div class="absolute inset-0 hidden md:block">
+        <div
+          class="pixel-trail-mask absolute inset-0 hidden md:block"
+          aria-hidden="true"
+        >
           <PixelTrail
             pixelColor="oklch(0.649 0.209 294.245)"
             pixelSize={80}
@@ -68,6 +69,7 @@
         </div>
         <div class="relative z-10 mx-auto w-full max-w-lg px-8">
           <Logo />
+          <Subtitle />
         </div>
       </div>
     {:else}
@@ -119,3 +121,19 @@
     {/if}
   </div>
 </main>
+
+<style>
+  /* Zona limpia sobre el logo + subtítulo: una máscara radial recorta la capa del
+     pixel trail en el centro (donde va el logo, centrado), con borde suave para que
+     los píxeles se desvanezcan hacia el hueco en vez de cortarse en seco. Solo
+     afecta desktop, que es donde el trail está activo (hidden md:block). */
+  .pixel-trail-mask {
+    --clear: radial-gradient(
+      ellipse 460px 190px at 50% 50%,
+      transparent 55%,
+      black 88%
+    );
+    -webkit-mask-image: var(--clear);
+    mask-image: var(--clear);
+  }
+</style>

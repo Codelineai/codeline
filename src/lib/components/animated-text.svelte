@@ -37,7 +37,7 @@
 
 <style>
   .animated-shiny-text {
-    animation: shiny-text 8s infinite;
+    animation: shiny-text 14s infinite;
     background-position: 0 0;
     background-size: var(--shiny-width) 100%;
     transition: background-position 1s cubic-bezier(0.6, 0.6, 0, 1);
