@@ -15,7 +15,7 @@
 <Button
   variant="outline"
   size="sm"
-  class="fixed left-4 bottom-4"
+  class="fixed right-4 bottom-4 sm:right-auto sm:left-4"
   onclick={toggleMode}
   aria-label={`Switch to ${targetMode === "dark" ? "dark" : "light"} mode`}
 >

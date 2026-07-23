@@ -15,7 +15,7 @@
   ];
 
   // Pausa (ms) que se mantiene una frase revelada antes de rotar a la siguiente.
-  const HOLD_MS = 5000;
+  const HOLD_MS = 3200;
 
   let index = $state(0);
   const current = $derived(phrases[index]);

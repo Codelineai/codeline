@@ -57,10 +57,7 @@
         transition:fade={{ duration: 150, easing: cubicOut }}
         class="absolute inset-0 flex items-center overflow-hidden"
       >
-        <div
-          class="pixel-trail-mask absolute inset-0 hidden md:block"
-          aria-hidden="true"
-        >
+        <div class="absolute inset-0 hidden md:block">
           <PixelTrail
             pixelColor="oklch(0.649 0.209 294.245)"
             pixelSize={80}
@@ -121,19 +118,3 @@
     {/if}
   </div>
 </main>
-
-<style>
-  /* Zona limpia sobre el logo + subtítulo: una máscara radial recorta la capa del
-     pixel trail en el centro (donde va el logo, centrado), con borde suave para que
-     los píxeles se desvanezcan hacia el hueco en vez de cortarse en seco. Solo
-     afecta desktop, que es donde el trail está activo (hidden md:block). */
-  .pixel-trail-mask {
-    --clear: radial-gradient(
-      ellipse 460px 190px at 50% 50%,
-      transparent 55%,
-      black 88%
-    );
-    -webkit-mask-image: var(--clear);
-    mask-image: var(--clear);
-  }
-</style>
