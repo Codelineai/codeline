@@ -42,8 +42,8 @@ export const projects: Project[] = [
     highlightComponent: SmartCards,
   },
   {
-    slug: "my-way-pizza",
-    name: "Landing Design",
+    slug: "design",
+    name: "Design Showcase",
     url: "https://www.mywaypizza305.com",
     shortUrl: "mywaypizza305.com",
     infoComponent: WiwaInfo,

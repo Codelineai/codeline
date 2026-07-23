@@ -9,7 +9,7 @@
 <button
   {onclick}
   class="cursor-pointer opacity-50 transition-opacity duration-150 hover:opacity-100"
-  aria-label="Volver al inicio"
+  aria-label="Back to home"
 >
   <svg viewBox="1013 53 135 144" fill="none" class="h-6 w-auto">
     <path

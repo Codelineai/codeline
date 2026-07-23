@@ -22,9 +22,9 @@
   import wavesSvg from "$lib/assets/wiwa/waves.svg";
 
   const stats = [
-    { value: "300K+", label: "tickets vendidos" },
-    { value: "100K+", label: "transacciones" },
-    { value: "4K+", label: "usuarios" },
+    { value: "300K+", label: "tickets sold" },
+    { value: "100K+", label: "transactions" },
+    { value: "4K+", label: "users" },
   ];
 
   // Natural dimensions (for aspect-ratio when masking).
@@ -187,7 +187,7 @@
           {#each videos as _, i (i)}
             <button
               onclick={() => (currentIndex = i)}
-              aria-label={`Ver video ${i + 1}`}
+              aria-label={`Watch video ${i + 1}`}
               aria-current={currentIndex === i}
               class="h-1.5 rounded-full bg-white/90 shadow-sm transition-[width,opacity,transform] duration-150 ease-out active:scale-[0.9] {currentIndex ===
               i
@@ -201,7 +201,7 @@
         <button
           onclick={() => (muted = !muted)}
           class="absolute bottom-3 right-3 z-30 flex size-6 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-[background-color,transform] duration-150 hover:bg-black/60 active:scale-[0.96]"
-          aria-label={muted ? "Activar sonido" : "Silenciar"}
+          aria-label={muted ? "Turn sound on" : "Mute sound"}
         >
           {#if muted}
             <VolumeX size={10} />
@@ -255,7 +255,12 @@
   >
     {#each stats as stat, i (stat.value)}
       <div
-        in:fly|global={{ y: 8, duration: 300, delay: 250 + i * 70, easing: cubicOut }}
+        in:fly|global={{
+          y: 8,
+          duration: 300,
+          delay: 250 + i * 70,
+          easing: cubicOut,
+        }}
         class="flex shrink-0 snap-start flex-col gap-1"
       >
         <span class="text-5xl font-medium tabular-nums text-foreground"

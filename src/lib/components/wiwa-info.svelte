@@ -1,33 +1,14 @@
-<script lang="ts">
-  const capabilities = [
-    "Ventas en línea y en boletería unificadas, con cuadres de caja y reportes automáticos.",
-    "Facturación electrónica conectada a la contabilidad: cada venta genera y envía su factura autorizada, sin procesos manuales.",
-    "Kioscos de autoservicio donde el visitante compra e imprime sus entradas de forma autónoma.",
-    "Creación y gestión de eventos, precios y experiencias desde el mismo sistema.",
-  ];
-</script>
-
 <div class="flex flex-col gap-4">
   <p class="text-sm leading-relaxed text-muted-foreground text-pretty">
-    El sistema que centraliza y automatiza la operación comercial de <span
-      class="text-foreground">Wiwa</span
-    >
-    (antes Zoológico de Quito), conectando ventas, operación, contabilidad y datos
-    en una sola plataforma.
+    A unified commerce platform for <span class="text-foreground">Wiwa</span> (formerly
+    Quito Zoo), bringing sales, operations, accounting, and data together in one system.
   </p>
 
-  <ul class="flex flex-col gap-2.5">
-    {#each capabilities as capability (capability)}
-      <li
-        class="flex gap-2 text-sm leading-relaxed text-muted-foreground text-pretty"
-      >
-        <span class="select-none text-muted-foreground/60" aria-hidden="true"
-          >–</span
-        >
-        <span>{capability}</span>
-      </li>
-    {/each}
-  </ul>
+  <p class="text-sm leading-relaxed text-muted-foreground text-pretty">
+    From online and box-office ticketing to self-service kiosks, electronic
+    invoicing, and automated reporting, it keeps the visitor journey and the
+    business behind it in sync.
+  </p>
 
   <div class="flex flex-col gap-1.5">
     <span

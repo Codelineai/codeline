@@ -13,9 +13,9 @@
   const contactActions = ["message", "mail", "phone", "link"] as const;
 
   const stats = [
-    { value: "100+", label: "tarjetas entregadas" },
-    { value: "8K+", label: "taps compartidos" },
-    { value: "2K+", label: "contactos guardados" },
+    { value: "100+", label: "cards delivered" },
+    { value: "8K+", label: "contactless taps" },
+    { value: "2K+", label: "contacts saved" },
   ];
 
   // Stagger entre cards para que la entrada se lea secuencial (01 → 02 → 03):
@@ -66,7 +66,7 @@
 
 <section
   class="w-full max-w-6xl px-4 py-6 sm:px-6"
-  aria-label="Pasos para compartir con Smart Cards"
+  aria-label="How Smart Cards work"
 >
   <h2
     in:fly|global={{ y: 8, duration: 350, easing: cubicOut }}
@@ -113,7 +113,7 @@
         <h3
           class="text-balance text-center text-lg font-semibold leading-snug text-foreground"
         >
-          Tu tarjeta, tu marca
+          Your card, your brand
         </h3>
       </div>
     </li>
@@ -173,7 +173,7 @@
         <h3
           class="text-balance text-center text-lg font-semibold leading-snug text-foreground"
         >
-          Comparte con un tap
+          Share with a tap
         </h3>
       </div>
     </li>
@@ -232,7 +232,7 @@
         <h3
           class="text-balance text-center text-lg font-semibold leading-snug text-foreground"
         >
-          Guarda tu contacto
+          Save contact details
         </h3>
       </div>
     </li>

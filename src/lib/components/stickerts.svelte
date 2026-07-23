@@ -119,11 +119,11 @@
   // Stats con tono deadpan: mismo formato serio que los proyectos-cliente,
   // el humor sale del contraste.
   const stats = [
-    { value: "5K+", label: "visitas en un mes" },
+    { value: "5K+", label: "visits in one month" },
     // { value: "5 días", label: "de construcción" },
-    { value: "100+", label: "usuarios" },
+    { value: "100+", label: "users" },
     // { value: "★★★★★", label: "aclamado por mi novia" },
-    { value: "$200", label: "el cromo más caro" },
+    { value: "$200", label: "most expensive sticker" },
   ];
 
   const siteUrl = "https://www.stickerts.com";
@@ -166,7 +166,7 @@
         href={siteUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Abrir Stickerts en una nueva pestaña"
+        aria-label="Open Stickerts in a new tab"
         class="pointer-events-auto inline-block w-fit transition-[opacity,transform] duration-150 hover:opacity-80 active:scale-[0.97]"
       >
         <img src={logoDark} alt="Stickerts" class="h-8 w-auto dark:hidden" />
@@ -207,7 +207,7 @@
       href={siteUrl}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Abrir Stickerts en una nueva pestaña"
+      aria-label="Open Stickerts in a new tab"
       class="pointer-events-auto inline-block w-fit transition-[opacity,transform] duration-150 hover:opacity-80 active:scale-[0.97]"
     >
       <img src={logoDark} alt="Stickerts" class="h-6 w-auto dark:hidden" />

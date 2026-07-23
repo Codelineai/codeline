@@ -43,6 +43,14 @@
   }
 </script>
 
+<svelte:head>
+  <title>Codeline | Digital products and experiments</title>
+  <meta
+    name="description"
+    content="A curated collection of digital products, experiments, and platforms by Codeline."
+  />
+</svelte:head>
+
 <main class="flex h-dvh flex-col overflow-hidden bg-background md:flex-row">
   <div class="relative flex min-h-0 flex-1 overflow-hidden">
     <BackgroundGrid gridSize={80} />

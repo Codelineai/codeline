@@ -17,7 +17,7 @@
   size="sm"
   class="fixed left-4 bottom-4"
   onclick={toggleMode}
-  aria-label={`Cambiar a tema ${targetMode === "dark" ? "oscuro" : "claro"}`}
+  aria-label={`Switch to ${targetMode === "dark" ? "dark" : "light"} mode`}
 >
-  Tema {targetMode === "dark" ? "oscuro" : "claro"}
+  {targetMode === "dark" ? "dark" : "light"}
 </Button>
